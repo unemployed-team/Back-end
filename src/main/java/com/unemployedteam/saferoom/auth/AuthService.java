@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -128,7 +129,22 @@ public class AuthService {
         .refreshToken(jwtProvider.createRefreshToken(userId)).build();
   }
 
-  public void logout(Long userId) {
+  @Transactional
+  public void logout(Authentication auth) {
+    if (auth == null || auth.getPrincipal() == null) {
+      throw new CustomException(ErrorCode.UNAUTHORIZED);
+    }
+
+    Long userId = extractUserId(auth);
+
     redisTokenService.deleteRefreshToken(userId);
+  }
+
+  private Long extractUserId(Authentication auth) {
+    Object principal = auth.getPrincipal();
+    if (principal instanceof Long) {
+      return (Long) principal;
+    }
+    return Long.valueOf(auth.getName());
   }
 }
