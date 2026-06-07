@@ -36,9 +36,6 @@ public class AuthController {
 
   @PostMapping("/logout")
   public ResponseEntity<Void> logout(Authentication auth) {
-    if (auth == null) {
-      throw new CustomException(ErrorCode.UNAUTHORIZED_USER);
-    }
     authService.logout((Long) auth.getPrincipal());
     return ResponseEntity.noContent().build();
   }
