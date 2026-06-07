@@ -23,9 +23,9 @@ spring:
 
 oauth2:
   kakao:
-    client-id: ${KAKAO_CLIENT_ID:dummy-kakao-id}
-    client-secret: ${KAKAO_CLIENT_SECRET:dummy-kakao-secret}
-    redirect-uri: ${KAKAO_REDIRECT_URI:http://localhost:8080/v1/auth/kakao}
+    client-id: ${KAKAO_CLIENT_ID}
+    client-secret: ${KAKAO_CLIENT_SECRET}
+    redirect-uri: ${KAKAO_REDIRECT_URI}
     token-uri: https://kauth.kakao.com/oauth/token
     resource-uri: https://kapi.kakao.com/v2/user/me
   google:
