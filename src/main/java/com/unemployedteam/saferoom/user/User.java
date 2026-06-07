@@ -2,10 +2,10 @@ package com.unemployedteam.saferoom.user;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.LocalDateTime;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "사용자")
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
   @Id
@@ -35,11 +36,11 @@ public class User {
   @Column(name = "interest_region")
   private String interestRegion;
 
-  @CreationTimestamp
+  @CreatedDate
   @Column(name = "created_at", updatable = false)
   private LocalDateTime createdAt;
 
-  @UpdateTimestamp
+  @LastModifiedDate
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 

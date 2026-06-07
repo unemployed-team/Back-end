@@ -1,5 +1,6 @@
 package com.unemployedteam.saferoom.user;
 
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,6 +13,8 @@ public class UserResponse {
   private String nickname;
   private String interestRegion;
   private String oauthProvider;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 
   public static UserResponse from(User user) {
     return UserResponse.builder()
@@ -20,6 +23,8 @@ public class UserResponse {
         .nickname(user.getNickname())
         .interestRegion(user.getInterestRegion())
         .oauthProvider(user.getOauthProvider())
+        .createdAt(user.getCreatedAt())
+        .updatedAt(user.getUpdatedAt())
         .build();
   }
 }
