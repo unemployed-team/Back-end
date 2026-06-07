@@ -64,6 +64,27 @@ public class AuthService {
     return processLogin(new GoogleUserInfo(fetchUserInfo(accessToken, googleResourceUri)));
   }
 
+  @Transactional
+  public TokenResponse reissue(String refreshToken) {
+    Long userId = jwtProvider.getUserId(refreshToken);
+    if (!redisTokenService.isValid(userId, refreshToken)) {
+      throw new CustomException(ErrorCode.INVALID_TOKEN);
+    }
+    return TokenResponse.builder().accessToken(jwtProvider.createAccessToken(userId))
+        .refreshToken(jwtProvider.createRefreshToken(userId)).build();
+  }
+
+  @Transactional
+  public void logout(Authentication auth) {
+    if (auth == null || auth.getPrincipal() == null) {
+      throw new CustomException(ErrorCode.UNAUTHORIZED);
+    }
+
+    Long userId = extractUserId(auth);
+
+    redisTokenService.deleteRefreshToken(userId);
+  }
+
   private String requestAccessToken(String tokenUri, MultiValueMap<String, String> params) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -117,27 +138,6 @@ public class AuthService {
     params.add("redirect_uri", redirectUri);
     params.add("code", code);
     return params;
-  }
-
-  @Transactional
-  public TokenResponse reissue(String refreshToken) {
-    Long userId = jwtProvider.getUserId(refreshToken);
-    if (!redisTokenService.isValid(userId, refreshToken)) {
-      throw new CustomException(ErrorCode.INVALID_TOKEN);
-    }
-    return TokenResponse.builder().accessToken(jwtProvider.createAccessToken(userId))
-        .refreshToken(jwtProvider.createRefreshToken(userId)).build();
-  }
-
-  @Transactional
-  public void logout(Authentication auth) {
-    if (auth == null || auth.getPrincipal() == null) {
-      throw new CustomException(ErrorCode.UNAUTHORIZED);
-    }
-
-    Long userId = extractUserId(auth);
-
-    redisTokenService.deleteRefreshToken(userId);
   }
 
   private Long extractUserId(Authentication auth) {
