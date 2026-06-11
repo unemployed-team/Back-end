@@ -1,7 +1,5 @@
 package com.unemployedteam.saferoom.auth;
 
-import com.unemployedteam.saferoom.global.exception.CustomException;
-import com.unemployedteam.saferoom.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
