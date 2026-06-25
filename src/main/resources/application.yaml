@@ -34,3 +34,17 @@ oauth2:
     redirect-uri: ${GOOGLE_REDIRECT_URI}
     token-uri: https://oauth2.googleapis.com/token
     resource-uri: https://www.googleapis.com/oauth2/v3/userinfo
+
+kakao:
+  api:
+    key: ${KAKAO_REST_API_KEY}
+    address-search-url: https://dapi.kakao.com/v2/local/search/address.json
+
+open-api:
+  molit:
+    building-ledger-url: http://apis.data.go.kr/1613000/BldRgstHubService
+    trade-url: http://apis.data.go.kr/1613000/RTMSDataSvcSHRent
+    service-key: ${MOLIT_SERVICE_KEY}
+
+app:
+  base-url: http://localhost:8080
