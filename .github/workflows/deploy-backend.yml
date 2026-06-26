@@ -7,7 +7,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
@@ -42,7 +41,7 @@ jobs:
           script: |
             cd /home/ec2-user/saferoom
 
-            cat > .env << EOF
+            cat > .env << 'EOF'
             DB_USERNAME=${{ secrets.DB_USERNAME }}
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             JWT_SECRET=${{ secrets.JWT_SECRET }}
@@ -64,19 +63,20 @@ jobs:
             pkill -f 'saferoom.*jar' || true
             sleep 5
 
-            JAR_PATH=$(ls build/libs/*.jar | head -1)
+            JAR_PATH=$(ls /home/ec2-user/saferoom/build/libs/*.jar | head -1)
 
-            nohup java -jar "$JAR_PATH" \
-              > app.log 2>&1 \
+            nohup setsid java -jar "$JAR_PATH" \
+              > /home/ec2-user/saferoom/app.log 2>&1 \
               < /dev/null &
 
-            sleep 3
+            disown $!
+            sleep 5
 
-            if pgrep -f "$JAR_PATH" > /dev/null; then
-              echo "Spring Boot started successfully."
+            if pgrep -f "saferoom.*jar" > /dev/null; then
+              echo "Spring Boot 실행 성공"
             else
-              echo "Spring Boot failed to start."
-              cat app.log
+              echo "Spring Boot 실행 실패"
+              tail -50 /home/ec2-user/saferoom/app.log
               exit 1
             fi
 
