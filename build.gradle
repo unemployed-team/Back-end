@@ -30,6 +30,11 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+	implementation 'org.hibernate.orm:hibernate-spatial:6.4.4.Final'
+	implementation 'org.locationtech.jts:jts-core:1.19.0'
+	implementation 'com.google.zxing:core:3.5.3'
+	implementation 'com.google.zxing:javase:3.5.3'
+
 	// JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.13.0'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.13.0'
