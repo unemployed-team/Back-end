@@ -35,6 +35,7 @@ public class SecurityConfig {
                 "/field-reports/**",
                 "/hri/**",
                 "/bookmarks/**",
+                "/contracts/**",
                 "/field-reports/*/submit"
             ).permitAll()
             .anyRequest().authenticated()
