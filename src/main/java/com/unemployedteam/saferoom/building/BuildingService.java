@@ -59,6 +59,10 @@ public class BuildingService {
   public HeatmapResponse getHeatmap(double swLat, double swLng, double neLat, double neLng) {
     List<Building> buildings = buildingRepository.findWithinBounds(swLat, swLng, neLat, neLng);
 
+    if (buildings.isEmpty()) {
+      return HeatmapResponse.builder().points(List.of()).build();
+    }
+
     List<Long> buildingIds = buildings.stream().map(Building::getId).toList();
     Map<Long, HriScore> scoreMap = hriScoreRepository
         .findLatestByBuildingIds(buildingIds).stream()
@@ -110,6 +114,10 @@ public class BuildingService {
   }
 
   private List<BuildingResponse> toBuildingResponses(List<Building> buildings) {
+    if (buildings.isEmpty()) {
+      return List.of();
+    }
+
     List<Long> ids = buildings.stream().map(Building::getId).toList();
     Map<Long, HriScore> scoreMap = hriScoreRepository
         .findLatestByBuildingIds(ids).stream()
