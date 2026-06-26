@@ -30,6 +30,9 @@ public enum ErrorCode {
   NOT_FOUND_BOOKMARK(HttpStatus.NOT_FOUND, "북마크를 찾을 수 없습니다."),
   INVALID_COMPARE_COUNT(HttpStatus.BAD_REQUEST, "비교 건물은 최대 3개까지 가능합니다."),
 
+  // Contract
+  NOT_FOUND_CONTRACT(HttpStatus.NOT_FOUND, "계약 정보를 찾을 수 없습니다."),
+
   // FieldReport
   NOT_FOUND_FIELD_REPORT(HttpStatus.NOT_FOUND, "현장 제보를 찾을 수 없습니다.");
 
