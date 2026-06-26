@@ -1,5 +1,6 @@
 package com.unemployedteam.saferoom.bookmark;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.unemployedteam.saferoom.hri.HriScore;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,7 @@ public class BookmarkResponse {
   private String roadAddress;
   private Integer hriScore;
   private String riskGrade;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime bookmarkedAt;
 
   public static BookmarkResponse from(Bookmark bookmark, HriScore score) {
