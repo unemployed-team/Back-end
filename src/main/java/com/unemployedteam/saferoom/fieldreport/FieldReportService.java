@@ -80,7 +80,7 @@ public class FieldReportService {
     buildingRepository.findById(buildingId)
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_BUILDING));
 
-    String reportUrl = baseUrl + "/v1/field-reports/" + buildingId + "/submit";
+    String reportUrl = baseUrl + "/field-reports/" + buildingId + "/submit";
     String qrBase64 = qrCodeGenerator.generateBase64QrCode(reportUrl, 300, 300);
 
     return QrCodeResponse.builder()
