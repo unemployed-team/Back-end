@@ -45,5 +45,8 @@ open-api:
     trade-url: http://apis.data.go.kr/1613000/RTMSDataSvcSHRent
     service-key: ${MOLIT_SERVICE_KEY}
 
-app:
-  base-url: http://localhost:8080
+server:
+  address: 0.0.0.0
+  port: 8080
+  servlet:
+    context-path: /api
