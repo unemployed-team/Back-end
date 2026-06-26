@@ -22,7 +22,11 @@ public enum ErrorCode {
   OAUTH_TOKEN_REQUEST_FAILED(HttpStatus.BAD_GATEWAY, "소셜 로그인 토큰 요청에 실패했습니다."),
   OAUTH_USER_INFO_FAILED(HttpStatus.BAD_GATEWAY, "소셜 사용자 정보 조회에 실패했습니다."),
 
-  NOT_FOUND_BUILDING(HttpStatus.NOT_FOUND, "건물 정보를 찾을 수 없습니다.");
+  // Building
+  NOT_FOUND_BUILDING(HttpStatus.NOT_FOUND, "건물 정보를 찾을 수 없습니다."),
+
+  // FieldReport
+  NOT_FOUND_FIELD_REPORT(HttpStatus.NOT_FOUND, "현장 제보를 찾을 수 없습니다.");
 
   private final HttpStatus status;
   private final String message;
