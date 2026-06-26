@@ -14,12 +14,6 @@ public class BuildingController {
 
   private final BuildingService buildingService;
 
-  @GetMapping("/autocomplete")
-  public ResponseEntity<AddressAutoCompleteResponse> autoComplete(
-      @RequestParam String keyword) {
-    return ResponseEntity.ok(buildingService.autoComplete(keyword));
-  }
-
   @GetMapping("/search")
   public ResponseEntity<List<BuildingResponse>> search(
       @RequestParam String keyword) {

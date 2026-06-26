@@ -21,26 +21,9 @@ public class BuildingService {
 
   private final BuildingRepository buildingRepository;
   private final HriScoreRepository hriScoreRepository;
-  private final KakaoAddressClient kakaoAddressClient;
 
   private final GeometryFactory geometryFactory =
       new GeometryFactory(new PrecisionModel(), 4326);
-
-  public AddressAutoCompleteResponse autoComplete(String keyword) {
-    List<KakaoAddressClient.AddressResult> kakaoResults =
-        kakaoAddressClient.searchAddress(keyword);
-
-    List<AddressAutoCompleteResponse.AddressItem> items = kakaoResults.stream()
-        .map(r -> AddressAutoCompleteResponse.AddressItem.builder()
-            .roadAddress(r.getRoadAddress())
-            .jibunAddress(r.getJibunAddress())
-            .lat(r.getLat())
-            .lng(r.getLng())
-            .build())
-        .collect(Collectors.toList());
-
-    return AddressAutoCompleteResponse.builder().items(items).build();
-  }
 
   @Transactional(readOnly = true)
   public List<BuildingResponse> searchByKeyword(String keyword) {
