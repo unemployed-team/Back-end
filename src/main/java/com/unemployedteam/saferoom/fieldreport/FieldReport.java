@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "QR 현장 제보")
+@Table(name = "QR_report")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
