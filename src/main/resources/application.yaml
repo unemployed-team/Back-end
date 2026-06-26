@@ -3,7 +3,7 @@ spring:
     name: saferoom
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/saferoom
+    url: jdbc:postgresql://localhost:5433/saferoom
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
@@ -38,7 +38,6 @@ oauth2:
 kakao:
   api:
     key: ${KAKAO_REST_API_KEY}
-    address-search-url: https://dapi.kakao.com/v2/local/search/address.json
 
 open-api:
   molit:
