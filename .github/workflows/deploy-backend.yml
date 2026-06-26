@@ -60,23 +60,14 @@ jobs:
             docker-compose -f docker-compose.yaml down
             docker-compose -f docker-compose.yaml up -d
 
-            pkill -f 'saferoom.*jar' || true
+            sudo systemctl restart saferoom
             sleep 5
 
-            JAR_PATH=$(ls /home/ec2-user/saferoom/build/libs/*.jar | head -1)
-
-            nohup setsid java -jar "$JAR_PATH" \
-              > /home/ec2-user/saferoom/app.log 2>&1 \
-              < /dev/null &
-
-            disown $!
-            sleep 5
-
-            if pgrep -f "saferoom.*jar" > /dev/null; then
+            if sudo systemctl is-active --quiet saferoom; then
               echo "Spring Boot 실행 성공"
             else
               echo "Spring Boot 실행 실패"
-              tail -50 /home/ec2-user/saferoom/app.log
+              sudo journalctl -u saferoom -n 50
               exit 1
             fi
 
