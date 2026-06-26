@@ -37,8 +37,8 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
-          script_stop: true  
-          request_pty: true   
+          script_stop: true
+          request_pty: true
           script: |
             cd /home/ec2-user/saferoom
             
@@ -65,7 +65,6 @@ jobs:
             sleep 5
             
             JAR_PATH=$(ls /home/ec2-user/saferoom/build/libs/*.jar | head -1)
-            nohup java -jar "$JAR_PATH" > /home/ec2-user/saferoom/app.log 2>&1 &
+            setsid java -jar "$JAR_PATH" > /home/ec2-user/saferoom/app.log 2>&1 &
             
-            disown %1
             echo "배포 완료"
