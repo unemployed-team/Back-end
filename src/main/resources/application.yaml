@@ -48,8 +48,6 @@ open-api:
 server:
   address: 0.0.0.0
   port: 8080
-  servlet:
-    context-path: /api
 
 codef:
   client-id: ${CODEF_CLIENT_ID}
