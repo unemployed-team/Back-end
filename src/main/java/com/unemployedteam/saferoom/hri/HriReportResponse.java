@@ -23,6 +23,12 @@ public class HriReportResponse {
   private List<AuctionDto> auctions;
   private String shareUrl;
   private LocalDateTime calculatedAt;
+  private Double riskProbability;
+  private String riskTrend;
+  private Double predictedJeonseRatio;
+  private Double buildingJeonseRatio;
+  private Double districtAvgJeonseRatio;
+  private String districtCompareComment;
 
   @Getter
   @Builder

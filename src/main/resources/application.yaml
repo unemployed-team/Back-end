@@ -50,3 +50,8 @@ server:
   port: 8080
   servlet:
     context-path: /api
+
+codef:
+  client-id: ${CODEF_CLIENT_ID}
+  client-secret: ${CODEF_CLIENT_SECRET}
+  search-url: https://development.codef.io/v1/kr/public/ck/auction-events/search

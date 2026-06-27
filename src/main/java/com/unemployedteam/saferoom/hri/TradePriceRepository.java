@@ -25,4 +25,16 @@ public interface TradePriceRepository extends JpaRepository<TradePrice, Long> {
       LIMIT 12
       """)
   List<TradePrice> findRecent12Months(@Param("buildingId") Long buildingId);
+
+  @Query("""
+    SELECT AVG(t.price) FROM TradePrice t
+    WHERE t.building.roadAddress LIKE :districtKeyword
+    AND t.tradeType = :tradeType
+    AND t.contractYearMonth >= :fromYearMonth
+    """)
+  Double findDistrictAvgPrice(
+      @Param("districtKeyword") String districtKeyword,
+      @Param("tradeType") String tradeType,
+      @Param("fromYearMonth") String fromYearMonth
+  );
 }

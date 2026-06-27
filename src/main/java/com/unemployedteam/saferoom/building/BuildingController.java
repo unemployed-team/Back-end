@@ -41,4 +41,14 @@ public class BuildingController {
   public ResponseEntity<BuildingResponse> detail(@PathVariable Long buildingId) {
     return ResponseEntity.ok(buildingService.getBuildingDetail(buildingId));
   }
+
+  @GetMapping("/clusters")
+  public ResponseEntity<ClusterResponse> clusters(
+      @RequestParam double swLat,
+      @RequestParam double swLng,
+      @RequestParam double neLat,
+      @RequestParam double neLng,
+      @RequestParam(defaultValue = "12") int zoomLevel) {
+    return ResponseEntity.ok(buildingService.getClusters(swLat, swLng, neLat, neLng, zoomLevel));
+  }
 }

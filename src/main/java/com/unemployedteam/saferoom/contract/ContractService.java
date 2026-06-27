@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.unemployedteam.saferoom.hri.OfficialPrice;
+import com.unemployedteam.saferoom.hri.OfficialPriceRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,6 +27,7 @@ public class ContractService {
   private final BuildingRepository buildingRepository;
   private final UserRepository userRepository;
   private final DepositSimulator depositSimulator;
+  private final OfficialPriceRepository officialPriceRepository;
 
   @Transactional
   public ContractResponse register(Long userId, ContractRequest request) {
@@ -104,6 +107,9 @@ public class ContractService {
   }
 
   private long estimateOfficialPrice(Building building) {
-    return 150_000_000L;
+    return officialPriceRepository
+        .findByBuildingId(building.getId())
+        .map(OfficialPrice::getOfficialPrice)
+        .orElse(150_000_000L);
   }
 }

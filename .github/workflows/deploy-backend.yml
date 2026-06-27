@@ -55,6 +55,8 @@ jobs:
             GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
             GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}
             MOLIT_SERVICE_KEY=${{ secrets.MOLIT_SERVICE_KEY }}
+            CODEF_CLIENT_ID=${{ secrets.CODEF_CLIENT_ID }}
+            CODEF_CLIENT_SECRET=${{ secrets.CODEF_CLIENT_SECRET }}
             EOF
 
             docker-compose -f docker-compose.yaml down

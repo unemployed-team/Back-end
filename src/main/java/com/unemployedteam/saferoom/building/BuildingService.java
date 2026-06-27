@@ -10,6 +10,7 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.unemployedteam.saferoom.building.dto.ClusterResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -94,6 +95,50 @@ public class BuildingService {
           .build();
       return buildingRepository.save(building);
     });
+  }
+
+  @Transactional(readOnly = true)
+  public ClusterResponse getClusters(double swLat, double swLng,
+      double neLat, double neLng, int zoomLevel) {
+
+    List<Building> buildings = buildingRepository.findWithinBounds(swLat, swLng, neLat, neLng);
+    if (buildings.isEmpty()) {
+      return ClusterResponse.builder().clusters(List.of()).build();
+    }
+
+    List<Long> ids = buildings.stream().map(Building::getId).toList();
+    Map<Long, HriScore> scoreMap = hriScoreRepository.findLatestByBuildingIds(ids).stream()
+        .collect(Collectors.toMap(s -> s.getBuilding().getId(), s -> s));
+
+    double gridSize = zoomLevel >= 15 ? 0.002 : zoomLevel >= 13 ? 0.01
+        : zoomLevel >= 11 ? 0.05 : 0.2;
+
+    Map<String, List<Building>> grid = new java.util.HashMap<>();
+    for (Building b : buildings) {
+      String key = Math.round(b.getLatitude() / gridSize) + ":"
+          + Math.round(b.getLongitude() / gridSize);
+      grid.computeIfAbsent(key, k -> new java.util.ArrayList<>()).add(b);
+    }
+
+    List<ClusterResponse.ClusterPoint> clusters = grid.values().stream().map(group -> {
+      double avgLat = group.stream().mapToDouble(Building::getLatitude).average().orElse(0);
+      double avgLng = group.stream().mapToDouble(Building::getLongitude).average().orElse(0);
+      List<HriScore> scores = group.stream()
+          .map(b -> scoreMap.get(b.getId())).filter(s -> s != null).toList();
+      double avgScore = scores.stream().mapToInt(HriScore::getTotalScore).average().orElse(0);
+      String dominant = scores.stream()
+          .collect(Collectors.groupingBy(HriScore::getRiskGrade, Collectors.counting()))
+          .entrySet().stream().max(Map.Entry.comparingByValue())
+          .map(Map.Entry::getKey).orElse("UNKNOWN");
+      return ClusterResponse.ClusterPoint.builder()
+          .centerLat(avgLat).centerLng(avgLng).count(group.size())
+          .avgHriScore((double) Math.round(avgScore))
+          .dominantGrade(dominant)
+          .buildingId(group.size() == 1 ? group.get(0).getId() : null)
+          .build();
+    }).toList();
+
+    return ClusterResponse.builder().clusters(clusters).build();
   }
 
   private List<BuildingResponse> toBuildingResponses(List<Building> buildings) {
