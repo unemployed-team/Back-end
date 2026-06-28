@@ -363,7 +363,7 @@ CODEF_CLIENT_SECRET=your_codef_client_secret
 - Java 21
 - Docker & Docker Compose
 
-### 1. DB / Redis 실행
+### DB / Redis 실행
 
 ```bash
 docker-compose up -d
@@ -371,47 +371,6 @@ docker-compose up -d
 
 PostgreSQL은 포트 `5433`, Redis는 `6379`로 실행됩니다.  
 PostGIS 익스텐션은 `init.sql`에서 자동 설치됩니다.
-
-### 2. 애플리케이션 실행
-
-```bash
-./gradlew bootRun
-```
-
-### 3. Swagger 접속
-
-```
-http://localhost:8080/swagger-ui.html
-```
-
----
-
-## 테스트
-
-```bash
-./gradlew test
-```
-
-컨트롤러 테스트 7개, 서비스 테스트 6개로 각 API와 비즈니스 로직의 성공/실패 케이스를 검증합니다.
-
-```
-controller/
-  AuthControllerTest          — 카카오/구글 로그인, 토큰 재발급, 로그아웃
-  BookmarkControllerTest      — 북마크 추가/삭제/목록/비교
-  BuildingControllerTest      — 건물 검색/상세/반경검색/히트맵/클러스터
-  ContractControllerTest      — 계약 등록/목록/수정/삭제/시뮬레이션/만기임박
-  FieldReportControllerTest   — 제보 등록/조회/QR 생성
-  HriControllerTest           — HRI 조회/재산출/예측/경매 조회
-  UserControllerTest          — 내정보 조회/수정/탈퇴
-
-service/
-  AuthServiceTest             — 로그인/토큰 재발급/로그아웃
-  BookmarkServiceTest         — 북마크 관리 및 비교
-  ContractServiceTest         — 계약 관리 및 경매 시뮬레이션
-  FieldReportServiceTest      — 현장 제보 및 QR 생성
-  HriServiceTest              — HRI 계산 및 위험도 예측
-  UserServiceTest             — 회원 정보 관리
-```
 
 ---
 
