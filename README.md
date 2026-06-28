@@ -254,8 +254,6 @@ saferoom/
 
 ## 📡 API 명세
 
-Swagger UI: `http://localhost:8080/swagger-ui.html`
-
 ### 인증 (`/auth`)
 
 | Method | Endpoint | 설명 |
