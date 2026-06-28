@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -32,7 +33,7 @@ public class UserControllerTest {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-      http.csrf(csrf -> csrf.disable());
+      http.csrf(AbstractHttpConfigurer::disable);
       return http.build();
     }
   }
@@ -48,7 +49,7 @@ public class UserControllerTest {
         .build();
     given(userService.getCurrentUser(1L)).willReturn(response);
 
-    mockMvc.perform(get("/v1/users/me").with(authentication(getAuth())))
+    mockMvc.perform(get("/users/me").with(authentication(getAuth())))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.email").value("dev.com"));
   }
@@ -56,7 +57,7 @@ public class UserControllerTest {
   @Test
   @DisplayName("내 정보 조회 실패 - 인증 없음")
   void failGetMe() throws Exception {
-    mockMvc.perform(get("/v1/users/me"))
+    mockMvc.perform(get("/users/me"))
         .andExpect(status().isUnauthorized());
   }
 
@@ -69,7 +70,7 @@ public class UserControllerTest {
     given(userService.updateUser(eq(1L), any(UserRequest.class)))
         .willReturn(response);
 
-    mockMvc.perform(patch("/v1/users/me")
+    mockMvc.perform(patch("/users/me")
             .with(authentication(getAuth()))
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
@@ -79,7 +80,7 @@ public class UserControllerTest {
   @Test
   @DisplayName("내 정보 수정 실패 - 인증 없음")
   void failUpdateMe() throws Exception {
-    mockMvc.perform(patch("/v1/users/me")
+    mockMvc.perform(patch("/users/me")
             .contentType(MediaType.APPLICATION_JSON)
             .content("{\"nickname\":\"new\"}"))
         .andExpect(status().isUnauthorized());
@@ -90,14 +91,14 @@ public class UserControllerTest {
   void successDeleteMe() throws Exception {
     willDoNothing().given(userService).deleteUser(1L);
 
-    mockMvc.perform(delete("/v1/users/me").with(authentication(getAuth())))
+    mockMvc.perform(delete("/users/me").with(authentication(getAuth())))
         .andExpect(status().isNoContent());
   }
 
   @Test
   @DisplayName("회원 탈퇴 실패 - 인증 없음")
   void failDeleteMe() throws Exception {
-    mockMvc.perform(delete("/v1/users/me"))
+    mockMvc.perform(delete("/users/me"))
         .andExpect(status().isUnauthorized());
   }
 }
