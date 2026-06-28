@@ -350,26 +350,6 @@ CODEF_CLIENT_ID=your_codef_client_id
 CODEF_CLIENT_SECRET=your_codef_client_secret
 ```
 
----
-
-##  로컬 실행
-
-### 요구사항
-
-- Java 21
-- Docker & Docker Compose
-
-### DB / Redis 실행
-
-```bash
-docker-compose up -d
-```
-
-PostgreSQL은 포트 `5433`, Redis는 `6379`로 실행됩니다.  
-PostGIS 익스텐션은 `init.sql`에서 자동 설치됩니다.
-
----
-
 ##  배포 구조
 
 ```
@@ -488,3 +468,8 @@ PostgreSQL (PostGIS) + Redis + Spring Boot (systemd)
 - 건물 유형(다가구주택 1.2억 / 오피스텔 1.8억)과 건축년도(2000년 이전 ×0.7 / 2015년 이후 ×1.3)를 조합해 공시가격 추정값을 계산합니다.
 - `official_price` 테이블에 UPSERT하며 `price_type = 'ESTIMATED'`로 추정값임을 표기합니다.
 - **경매 시뮬레이터 연관**: `낙찰가 = 공시가격 × 0.72(대구 평균 낙찰가율)` 계산의 기초 데이터입니다.
+
+#### `db_config.py` — DB 연결 설정
+
+- .env 파일에서 설정을 읽어 PostgreSQL 연결 객체를 반환하는 공통 모듈입니다.
+- 모든 스크립트에서 from db_config import get_conn으로 공유해 사용합니다.
