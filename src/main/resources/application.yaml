@@ -1,3 +1,55 @@
 spring:
   application:
     name: saferoom
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/saferoom
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
+  jwt:
+    secret: ${JWT_SECRET}
+
+oauth2:
+  kakao:
+    client-id: ${KAKAO_CLIENT_ID}
+    client-secret: ${KAKAO_CLIENT_SECRET}
+    redirect-uri: ${KAKAO_REDIRECT_URI}
+    token-uri: https://kauth.kakao.com/oauth/token
+    resource-uri: https://kapi.kakao.com/v2/user/me
+  google:
+    client-id: ${GOOGLE_CLIENT_ID}
+    client-secret: ${GOOGLE_CLIENT_SECRET}
+    redirect-uri: ${GOOGLE_REDIRECT_URI}
+    token-uri: https://oauth2.googleapis.com/token
+    resource-uri: https://www.googleapis.com/oauth2/v3/userinfo
+
+kakao:
+  api:
+    key: ${KAKAO_REST_API_KEY}
+
+open-api:
+  molit:
+    building-ledger-url: http://apis.data.go.kr/1613000/BldRgstHubService
+    trade-url: http://apis.data.go.kr/1613000/RTMSDataSvcSHRent
+    service-key: ${MOLIT_SERVICE_KEY}
+
+server:
+  address: 0.0.0.0
+  port: 8080
+
+codef:
+  client-id: ${CODEF_CLIENT_ID}
+  client-secret: ${CODEF_CLIENT_SECRET}
+  search-url: https://development.codef.io/v1/kr/public/ck/auction-events/search
