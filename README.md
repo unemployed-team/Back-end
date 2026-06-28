@@ -533,6 +533,3 @@ PostgreSQL (PostGIS) + Redis + Spring Boot (systemd)
 - 건물 유형(다가구주택 1.2억 / 오피스텔 1.8억)과 건축년도(2000년 이전 ×0.7 / 2015년 이후 ×1.3)를 조합해 공시가격 추정값을 계산합니다.
 - `official_price` 테이블에 UPSERT하며 `price_type = 'ESTIMATED'`로 추정값임을 표기합니다.
 - **경매 시뮬레이터 연관**: `낙찰가 = 공시가격 × 0.72(대구 평균 낙찰가율)` 계산의 기초 데이터입니다.
-
- Boot 기동 → HRI Score 자동 산출 가능 상태
-```
