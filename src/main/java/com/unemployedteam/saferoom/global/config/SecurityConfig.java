@@ -34,10 +34,7 @@ public class SecurityConfig {
                 "/v3/api-docs/**",
                 "/buildings/**",
                 "/field-reports/**",
-                "/hri/**",
-                "/bookmarks/**",
-                "/contracts/**",
-                "/field-reports/*/submit"
+                "/hri/**"
             ).permitAll()
             .anyRequest().authenticated()
         )
