@@ -16,7 +16,6 @@
 <br>
 <a href="https://github.com/seonghyeon-digipen"><strong>이성현</strong></a>
 <br>
-<small>프론트엔드 개발자</small>
 </td>
 
 <td align="center">
@@ -24,7 +23,6 @@
 <br>
 <a href="https://github.com/taejuKwon-digipen"><strong>권태주</strong></a>
 <br>
-<small>프론트엔드 개발자</small>
 </td>
 </tr>
 </table>
@@ -38,14 +36,13 @@
 <br>
 <a href="https://github.com/Hyun-jun-Lee0811"><strong>이현준</strong></a>
 <br>
-<small>백엔드 개발자</small>
 </td>
 </tr>
 </table>
 
 ---
 
-## 🛠 기술 스택
+## 기술 스택
 
 | 분류 | 기술 |
 |------|------|
@@ -252,7 +249,7 @@ saferoom/
 
 ---
 
-## 📡 API 명세
+## API 명세
 
 ### 인증 (`/auth`)
 
